@@ -17,7 +17,7 @@ CREATE TABLE Justice
   leaning VARCHAR(256) NOT NULL,
   startdate VARCHAR(256) NOT NULL,
   enddate VARCHAR(256),
-  pid_appointed INTEGER NOT NULL REFERENCES President(pid),
+  pid_appointed INTEGER NOT NULL REFERENCES President(pid)
 );
 
 CREATE TABLE Court
@@ -30,7 +30,7 @@ CREATE TABLE Court
 
 CREATE TABLE CourtCase
 (
-  caseid VARCHAR(256) NOT NULL PRIMARY KEY,
+  caseid INTEGER NOT NULL PRIMARY KEY,
   courtid INTEGER NOT NULL,
   name VARCHAR(256) NOT NULL,
   in_favor_of VARCHAR(256) NOT NULL,
