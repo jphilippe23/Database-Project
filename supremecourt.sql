@@ -1,6 +1,6 @@
 CREATE TABLE President
 (
-  pid INTEGER PRIMARY KEY,
+  pid INTEGER PRIMARY KEY NOT NULL,
   name VARCHAR(256) NOT NULL,
   startyear INTEGER NOT NULL,
   endyear INTEGER,
@@ -9,7 +9,7 @@ CREATE TABLE President
 
 CREATE TABLE Justice
 (
-  jid INTEGER PRIMARY KEY,
+  jid INTEGER PRIMARY KEY NOT NULL,
   name VARCHAR(256) NOT NULL,
   birthyear INTEGER NOT NULL,
   homestate VARCHAR(256) NOT NULL,
@@ -17,12 +17,12 @@ CREATE TABLE Justice
   leaning VARCHAR(256) NOT NULL,
   startdate VARCHAR(256) NOT NULL,
   enddate VARCHAR(256),
-  pid_appointed INTEGER NOT NULL REFERENCES President(pid)
+  pid_appointed INTEGER NOT NULL REFERENCES President(pid),
 );
 
 CREATE TABLE Court
 (
-  cid INTEGER PRIMARY KEY,
+  cid INTEGER NOT NULL PRIMARY KEY,
   chief_justice_id INTEGER NOT NULL REFERENCES Justice(jid),
   startdate VARCHAR(256) NOT NULL,
   enddate VARCHAR(256)
@@ -30,7 +30,7 @@ CREATE TABLE Court
 
 CREATE TABLE CourtCase
 (
-  caseid INTEGER PRIMARY KEY,
+  caseid VARCHAR(256) NOT NULL PRIMARY KEY,
   courtid INTEGER NOT NULL,
   name VARCHAR(256) NOT NULL,
   in_favor_of VARCHAR(256) NOT NULL,
@@ -73,7 +73,7 @@ INSERT INTO President VALUES(45, 'Donald Trump', 2017, NULL, 'Russian');
 INSERT INTO Justice VALUES(97, 'Warren E. Burger', 1907, 'Virginia', 'male', 'conservative', '19690623', '19860926', 37);
 INSERT INTO Justice VALUES(98, 'Harry Blackmun', 1908, 'Minnesota', 'male', 'liberal', '19700609', '19940803', 37);
 INSERT INTO Justice VALUES(99, 'Lewis Franklin Powell Jr.', 1907, 'Virginia', 'male', 'conservative', '19720107', '19870926', 37);
-INSERT INTO Justice VALUES(100, 'William Rehnquist', 1924, 'Arizona', 'male', 'conservative', '19720107', '20050903', 37);
+INSERT INTO Justice VALUES(100, 'William Rehnquist', 1924, 'Arizona', 'male', 'conservative', '19720107', '19860926', 37);
 INSERT INTO Justice VALUES(101, 'John Paul Stevens', 1920, 'Illinois', 'male', 'liberal', '19751219', '20100629', 38);
 INSERT INTO Justice VALUES(102, 'Sandra Day O''Connor', 1930, 'Arizona', 'female', 'moderate', '19810925', '20060131', 40);
 INSERT INTO Justice VALUES(103, 'Antonin Scalia', 1936, 'Virginia', 'male', 'conservative', '19860926', '20160213', 40);
@@ -93,3 +93,60 @@ INSERT INTO Court VALUES(17, 109, '20050929', NULL);
 
 INSERT INTO CourtCase VALUES(1, 17, 'Citizens United v. FEC', 'de-regulated campaign spending', 5, 4);
 INSERT INTO CourtCase VALUES(2, 17, 'National Federation of Independent Business v. Sebelius', 'upheld most provisions of the ACA', 5, 4);
+INSERT INTO CourtCase VALUES(3, 16, 'Ohio v. Robinette', 'officers do not have to tell motorists they are "free to go" before searching a vehicle', 8, 1);
+
+INSERT INTO Voted VALUES(104, 1, 'majority');
+INSERT INTO Voted VALUES(109, 1, 'majority');
+INSERT INTO Voted VALUES(103, 1, 'majority');
+INSERT INTO Voted VALUES(110, 1, 'majority');
+INSERT INTO Voted VALUES(106, 1, 'majority');
+INSERT INTO Voted VALUES(101, 1, 'dissent');
+INSERT INTO Voted VALUES(107, 1, 'dissent');
+INSERT INTO Voted VALUES(108, 1, 'dissent');
+INSERT INTO Voted VALUES(111, 1, 'dissent');
+INSERT INTO Voted VALUES(109, 2, 'majority');
+INSERT INTO Voted VALUES(107, 2, 'majority');
+INSERT INTO Voted VALUES(108, 2, 'majority');
+INSERT INTO Voted VALUES(111, 2, 'majority');
+INSERT INTO Voted VALUES(112, 2, 'majority');
+INSERT INTO Voted VALUES(103, 2, 'dissent');
+INSERT INTO Voted VALUES(104, 2, 'dissent');
+INSERT INTO Voted VALUES(106, 2, 'dissent');
+INSERT INTO Voted VALUES(110, 2, 'dissent');
+INSERT INTO Voted VALUES(100, 3, 'majority');
+INSERT INTO Voted VALUES(102, 3, 'majority');
+INSERT INTO Voted VALUES(103, 3, 'majority');
+INSERT INTO Voted VALUES(104, 3, 'majority');
+INSERT INTO Voted VALUES(105, 3, 'majority');
+INSERT INTO Voted VALUES(106, 3, 'majority');
+INSERT INTO Voted VALUES(108, 3, 'majority');
+INSERT INTO Voted VALUES(107, 3, 'concurrence');
+INSERT INTO Voted VALUES(101, 3, 'dissent');
+
+INSERT INTO ServedOn VALUES(97, 15, 'chief');
+INSERT INTO ServedOn VALUES(98, 15, 'associate');
+INSERT INTO ServedOn VALUES(98, 16, 'associate');
+INSERT INTO ServedOn VALUES(99, 15, 'associate');
+INSERT INTO ServedOn VALUES(99, 16, 'associate');
+INSERT INTO ServedOn VALUES(100, 15, 'associate');
+INSERT INTO ServedOn VALUES(100, 16, 'chief');
+INSERT INTO ServedOn VALUES(101, 16, 'associate');
+INSERT INTO ServedOn VALUES(101, 17, 'associate');
+INSERT INTO ServedOn VALUES(102, 16, 'associate');
+INSERT INTO ServedOn VALUES(102, 17, 'associate');
+INSERT INTO ServedOn VALUES(103, 16, 'associate');
+INSERT INTO ServedOn VALUES(103, 17, 'associate');
+INSERT INTO ServedOn VALUES(104, 16, 'associate');
+INSERT INTO ServedOn VALUES(104, 17, 'associate');
+INSERT INTO ServedOn VALUES(105, 16, 'associate');
+INSERT INTO ServedOn VALUES(105, 17, 'associate');
+INSERT INTO ServedOn VALUES(106, 16, 'associate');
+INSERT INTO ServedOn VALUES(106, 17, 'associate');
+INSERT INTO ServedOn VALUES(107, 16, 'associate');
+INSERT INTO ServedOn VALUES(107, 17, 'associate');
+INSERT INTO ServedOn VALUES(108, 16, 'associate');
+INSERT INTO ServedOn VALUES(108, 17, 'associate');
+INSERT INTO ServedOn VALUES(109, 17, 'chief');
+INSERT INTO ServedOn VALUES(110, 17, 'associate');
+INSERT INTO ServedOn VALUES(111, 17, 'associate');
+INSERT INTO ServedOn VALUES(112, 17, 'associate');
