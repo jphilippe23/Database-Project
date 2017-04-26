@@ -1,0 +1,68 @@
+CREATE TABLE President
+(
+  PID INTEGER PRIMARY KEY NOT NULL,
+  Name VARCHAR(256) NOT NULL,
+  Startdate VARCHAR(256) NOT NULL,
+  enddate VARCHAR(256),
+  party VARCHAR(256) NOT NULL,
+  homestate VARCHAR(256) NOT NULL
+);
+
+\COPY President FROM 'USPresident-Wikipedia-URLs-Thmbs-HS.csv' WITH DELIMITER ',' CSV;
+
+CREATE TABLE Justice
+(
+  JusticeName VARCHAR(256) NOT NULL,
+  JID INTEGER PRIMARY KEY NOT NULL,
+  BirthYear INTEGER NOT NULL,
+  HomeState VARCHAR(256) NOT NULL,
+  Race VARCHAR(256) NOT NULL,
+  Gender VARCHAR(8) NOT NULL,
+  Leaning VARCHAR(256) NOT NULL,
+  PIDAppointed INTEGER NOT NULL REFERENCES President(PID),
+  StartDate VARCHAR(256) NOT NULL,
+  EndDate VARCHAR(256)
+);
+
+\COPY Justice FROM 'Justice.csv' WITH DELIMITER ',' CSV;
+
+CREATE TABLE Court
+(
+  CourtID INTEGER NOT NULL PRIMARY KEY,
+  ChiefJusticeID INTEGER REFERENCES Justice(JID),
+  StartDate VARCHAR(256) NOT NULL,
+  EndDate VARCHAR(256)
+);
+
+\COPY Court FROM 'Court.csv' WITH DELIMITER ',' CSV;
+
+CREATE TABLE Source
+( 
+  SourceID INTEGER PRIMARY KEY,
+  SourceCourt VARCHAR(256) NOT NULL
+);
+
+\COPY Source FROM 'Source.csv' WITH DELIMITER ',' CSV;
+
+CREATE TABLE CourtCase
+(
+  caseid VARCHAR(256) NOT NULL,
+  CourtID INTEGER NOT NULL REFERENCES Court(CourtID),
+  CaseName VARCHAR(256) NOT NULL,
+  CaseSourceID INTEGER REFERENCES Source(SourceID),
+  decisionDate VARCHAR(256),
+  decisionDirection VARCHAR(256),
+  NumMajorityVotes INTEGER NOT NULL
+);
+
+\COPY CourtCase FROM 'CourtCase.csv' WITH DELIMITER ',' CSV;
+
+CREATE TABLE Voted
+(
+  JID INTEGER NOT NULL REFERENCES Justice(JID),
+  CaseID VARCHAR(256) NOT NULL,
+  vote VARCHAR(256),
+  PRIMARY KEY(JID, CaseID, vote)
+);
+
+\COPY Voted FROM 'Vote.csv' WITH DELIMITER ',' CSV;
